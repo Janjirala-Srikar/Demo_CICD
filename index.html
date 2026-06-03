@@ -1,81 +1,272 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Space Explorer</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <meta charset="UTF-8">
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    .page {
+      width: 100%;
+      max-width: 400px;
+    }
 
-    <title>Simple Webpage</title>
+    /* Hero */
+    .hero {
+      background: linear-gradient(160deg, #0a0a2e 0%, #1a0550 50%, #0d1b4b 100%);
+      border-radius: 12px;
+      padding: 2rem 1.25rem 1.5rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
 
-    <style>
+    .stars {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
 
-        body {
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle 2s infinite alternate;
+    }
 
-            font-family: Arial, sans-serif;
+    @keyframes twinkle {
+      from { opacity: 0.2; }
+      to   { opacity: 1; }
+    }
 
-            text-align: center;
+    .planet-badge {
+      display: inline-block;
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      background: #AFA9EC;
+      color: #26215C;
+      position: relative;
+      z-index: 1;
+    }
 
-            margin-top: 100px;
+    .hero h1 {
+      font-size: 26px;
+      font-weight: 500;
+      color: #fff;
+      margin: 0 0 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
 
-            background-color: #f4f4f4;
+    .hero p {
+      font-size: 14px;
+      color: #AFA9EC;
+      margin: 0;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
 
-        }
+    /* Planet Grid */
+    .planet-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
 
-        h1 {
+    .planet-card {
+      background: #fff;
+      border: 0.5px solid #ddd;
+      border-radius: 12px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
 
-            color: #333;
+    .planet-card:hover { border-color: #aaa; }
 
-        }
+    .planet-icon { font-size: 32px; margin-bottom: 8px; }
 
-        p {
+    .planet-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: #111;
+      margin: 0 0 2px;
+    }
 
-            color: #666;
+    .planet-dist {
+      font-size: 12px;
+      color: #666;
+      margin: 0;
+    }
 
-        }
+    /* Fact Cards */
+    .fact-card {
+      background: #fff;
+      border: 0.5px solid #ddd;
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
 
-        button {
+    .fact-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
 
-            padding: 10px 20px;
+    .fact-emoji { font-size: 22px; }
 
-            font-size: 16px;
+    .fact-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: #111;
+      margin: 0;
+    }
 
-            border: none;
+    .fact-body {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.65;
+      margin: 0;
+    }
 
-            background-color: #0078d7;
+    .tag-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
 
-            color: white;
+    .tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-weight: 500;
+    }
 
-            border-radius: 5px;
+    .tag-purple { background: #EEEDFE; color: #3C3489; }
+    .tag-teal   { background: #E1F5EE; color: #085041; }
+    .tag-amber  { background: #FAEEDA; color: #633806; }
 
-            cursor: pointer;
+    /* Button */
+    .explore-btn {
+      width: 100%;
+      padding: 12px;
+      background: #534AB7;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
 
-        }
-
-        button:hover {
-
-            background-color: #005bb5;
-
-        }
-
-    </style>
-
+    .explore-btn:hover { background: #3C3489; }
+  </style>
 </head>
-
 <body>
+  <div class="page">
 
-    <h1>Welcome to My Webpage</h1>
+    <!-- Hero -->
+    <div class="hero">
+      <div class="stars" id="starsContainer"></div>
+      <div class="planet-badge">🌌 Solar System</div>
+      <h1>Explore Space</h1>
+      <p>Your pocket guide to the planets, stars, and the wonders beyond.</p>
+    </div>
 
-    <p>This is a simple webpage created using HTML and CSS.</p>
+    <!-- Planet Grid -->
+    <div class="planet-grid">
+      <div class="planet-card">
+        <div class="planet-icon">🔴</div>
+        <p class="planet-name">Mars</p>
+        <p class="planet-dist">225M km away</p>
+      </div>
+      <div class="planet-card">
+        <div class="planet-icon">🟠</div>
+        <p class="planet-name">Jupiter</p>
+        <p class="planet-dist">778M km away</p>
+      </div>
+      <div class="planet-card">
+        <div class="planet-icon">💍</div>
+        <p class="planet-name">Saturn</p>
+        <p class="planet-dist">1.4B km away</p>
+      </div>
+      <div class="planet-card">
+        <div class="planet-icon">🔵</div>
+        <p class="planet-name">Neptune</p>
+        <p class="planet-dist">4.5B km away</p>
+      </div>
+    </div>
 
-    <button onclick="alert('Hello! Thanks for visiting.')">
+    <!-- Fact Card 1 -->
+    <div class="fact-card">
+      <div class="fact-header">
+        <span class="fact-emoji">☀️</span>
+        <p class="fact-title">Did you know?</p>
+      </div>
+      <p class="fact-body">
+        The Sun accounts for 99.86% of all the mass in our solar system.
+        Light from the Sun takes about 8 minutes and 20 seconds to reach Earth.
+      </p>
+      <div class="tag-row">
+        <span class="tag tag-amber">Sun</span>
+        <span class="tag tag-purple">Light Speed</span>
+        <span class="tag tag-teal">Fact</span>
+      </div>
+    </div>
 
-        Click Me
+    <!-- Fact Card 2 -->
+    <div class="fact-card">
+      <div class="fact-header">
+        <span class="fact-emoji">🌙</span>
+        <p class="fact-title">The Moon</p>
+      </div>
+      <p class="fact-body">
+        Earth's Moon is slowly drifting away — about 3.8 cm per year.
+        In roughly 600 million years, total solar eclipses will no longer be possible.
+      </p>
+      <div class="tag-row">
+        <span class="tag tag-purple">Moon</span>
+        <span class="tag tag-teal">Orbit</span>
+      </div>
+    </div>
 
+    <!-- Button -->
+    <button class="explore-btn" onclick="alert('Keep exploring the universe! 🚀')">
+      Discover more facts →
     </button>
 
-</body>
+  </div>
 
+  <script>
+    const container = document.getElementById('starsContainer');
+    for (let i = 0; i < 40; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const size = Math.random() * 2.5 + 1;
+      s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-delay:${Math.random()*2}s;animation-duration:${1.5+Math.random()}s`;
+      container.appendChild(s);
+    }
+  </script>
+</body>
 </html>

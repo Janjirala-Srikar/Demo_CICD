@@ -1,12 +1,12 @@
-version: 0.0
+=version: 0.0
 os: linux
 
 files:
   - source: /
-    destination: /var/www/html
+    destination: /usr/share/nginx/html
 
 hooks:
-  ApplicationStart:
-    - location: scripts/start.sh
+  BeforeInstall:
+    - location: scripts/install_nginx.sh
       timeout: 300
       runas: root
